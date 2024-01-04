@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:foodie/controllers/google-sign-in-controller.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:foodie/views/auth-ui/sign-in-screen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+   WelcomeScreen({super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  final GoogleSignInController _googleSignInController=Get.put(GoogleSignInController());
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
 
       appBar: AppBar(
@@ -53,7 +56,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: TextButton.icon(
                     icon:Image.asset('assets/icons/google.png',height: Get.height/12,width:Get.width/12,),
                     label: Text('Sign in with google',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
-                    onPressed: () {  },
+                    onPressed: () {
+                      _googleSignInController.signInWithGoogle();
+                    },
                   )
                 ),
               ),

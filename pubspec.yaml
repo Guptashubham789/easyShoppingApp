@@ -38,7 +38,10 @@ dependencies:
   lottie: ^2.6.0
   get: ^4.6.5
   firebase_core: ^2.24.2
-  firebase_auth: ^4.7.0
+  firebase_auth: ^4.15.3
+  google_sign_in: ^6.1.6
+  cloud_firestore: ^4.13.6
+  flutter_easyloading: ^3.0.5
 
 dev_dependencies:
   flutter_test:

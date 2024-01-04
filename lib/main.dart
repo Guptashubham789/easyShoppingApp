@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:foodie/views/auth-ui/splash-screen.dart';
 import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
+      builder: EasyLoading.init(),
     );
   }
 }
