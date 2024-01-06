@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie/controllers/sign-up-controller.dart';
 import 'package:foodie/views/auth-ui/sign-in-screen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -13,6 +15,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final SignUpController signUpController=Get.put(SignUpController());
+  TextEditingController userName=TextEditingController();
+  TextEditingController userEmail=TextEditingController();
+  TextEditingController userPhone=TextEditingController();
+  TextEditingController userCity=TextEditingController();
+  TextEditingController userPassword=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
+                    controller: userName,
                     cursorColor: AppConstant.appSecondaryColor,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -60,6 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
+                    controller: userEmail,
                     cursorColor: AppConstant.appSecondaryColor,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
@@ -78,18 +88,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: Get.width,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: TextFormField(
+                  child: Obx(()=> TextFormField(
+                    controller: userPassword,
+                    obscureText: signUpController.isPasswordVisible.value,
                     cursorColor: AppConstant.appSecondaryColor,
                     keyboardType: TextInputType.visiblePassword,
                     decoration: InputDecoration(
-                        hintText: "Password sg",
+                        hintText: "Password ",
                         prefixIcon: Icon(Icons.password),
+                        suffixIcon: GestureDetector(
+                          onTap: (){
+                            signUpController.isPasswordVisible.toggle();
+                          },
+                            child:signUpController.isPasswordVisible.value? Icon(Icons.visibility_off):Icon(Icons.visibility),
+                        ),
                         contentPadding: EdgeInsets.only(top: 2,left: 8),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)
                         )
                     ),
-                  ),
+                  ),),
                 ),
               ),
               Container(
@@ -98,6 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
+                    controller: userPhone,
                     cursorColor: AppConstant.appSecondaryColor,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
@@ -117,6 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
+                    controller: userCity,
                     cursorColor: AppConstant.appSecondaryColor,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -146,8 +166,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: TextButton.icon(
                       icon: Icon(Icons.app_registration,color: Colors.white,),
                       label: Text('SignUp',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
-                      onPressed: () {
-
+                      onPressed: () async{
+                          String name=userName.text.trim();
+                          String email=userEmail.text.trim();
+                          String phone=userPhone.text.trim();
+                          String city=userCity.text.trim();
+                          String password=userPassword.text.trim();
+                          String userDeviceToken='';
+                          if(name.isEmpty || email.isEmpty || phone.isEmpty || city.isEmpty || password.isEmpty){
+                            Get.snackbar(
+                                "Error",
+                                "Please enter all detatils",
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: AppConstant.appSecondaryColor,
+                              colorText: AppConstant.appTextColor,
+                            );
+                          }else{
+                            //user hmara empty ho bhi sakta hai aur nhi bhi ho sakta hai
+                            UserCredential? userCredential=await signUpController.signUpFunction(
+                                name,
+                                email,
+                                phone,
+                                city,
+                                password,
+                                userDeviceToken
+                            );
+                            if(userCredential != null){
+                              Get.snackbar(
+                                "Verification email sent",
+                                "Please check your email..",
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: AppConstant.appSecondaryColor,
+                                colorText: AppConstant.appTextColor,
+                              );
+                              FirebaseAuth.instance.signOut();
+                              Get.offAll(()=>SignInScreen());
+                            }
+                          }
                       },
                     )
                 ),

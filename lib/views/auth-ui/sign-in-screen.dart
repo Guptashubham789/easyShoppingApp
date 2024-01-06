@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie/controllers/sign-in-controller.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:foodie/views/auth-ui/sign-up-screen.dart';
+import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
@@ -15,6 +18,9 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
+    final SignInController signInController=Get.put(SignInController());
+    TextEditingController userEmail=TextEditingController();
+    TextEditingController userPassword=TextEditingController();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -39,6 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
+                    controller: userEmail,
                     cursorColor: AppConstant.appSecondaryColor,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
@@ -57,18 +64,26 @@ class _SignInScreenState extends State<SignInScreen> {
                 width: Get.width,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: TextFormField(
+                  child: Obx(()=>TextFormField(
+                    controller: userPassword,
+                    obscureText: signInController.isPasswordVisible.value,
                     cursorColor: AppConstant.appSecondaryColor,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.visiblePassword,
                     decoration: InputDecoration(
                         hintText: "Password",
                         prefixIcon: Icon(Icons.password),
+                        suffixIcon: GestureDetector(
+                          onTap: (){
+                            signInController.isPasswordVisible.toggle();
+                          },
+                          child:signInController.isPasswordVisible.value? Icon(Icons.visibility_off):Icon(Icons.visibility),
+                        ),
                         contentPadding: EdgeInsets.only(top: 2,left: 8),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)
                         )
                     ),
-                  ),
+                  ),),
                 ),
               ),
               Container(
@@ -95,9 +110,53 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: TextButton.icon(
                       icon: Icon(Icons.login,color: Colors.white,),
                       label: Text('Login',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                            SignInScreen()));
+                      onPressed: () async{
+                        String email=userEmail.text.trim();
+                        String password=userPassword.text.trim();
+                        if(email.isEmpty || password.isEmpty){
+                          Get.snackbar(
+                            "Error",
+                            "Please enter email and password..",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: AppConstant.appSecondaryColor,
+                            colorText: AppConstant.appTextColor,
+                          );
+                        }else{
+                          UserCredential? userCredential=await signInController.signInFunction(
+                              email,
+                              password
+                          );
+                          if(userCredential!=null){
+                            if(userCredential.user!.emailVerified){
+                              Get.snackbar(
+                                "Success",
+                                "Login Successfully!",
+                                snackPosition: SnackPosition.TOP,
+                                backgroundColor: AppConstant.appSecondaryColor,
+                                colorText: AppConstant.appTextColor,
+                              );
+                              Get.offAll(()=>MainScreens());
+                            }else{
+                              Get.snackbar(
+                                "Error",
+                                "Please verify your email before login..",
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: AppConstant.appSecondaryColor,
+                                colorText: AppConstant.appTextColor,
+                              );
+                            }
+                          }else{
+                            Get.snackbar(
+                              "Error",
+                              "Please try again...",
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: AppConstant.appSecondaryColor,
+                              colorText: AppConstant.appTextColor,
+                            );
+                          }
+                        }
+                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                        //     SignInScreen()));
                       },
                     )
                 ),

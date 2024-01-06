@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:foodie/views/auth-ui/splash-screen.dart';
@@ -13,7 +14,7 @@ void main() async{
   runApp(const MyApp(
 
   ));
-  print("ss");
+
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +25,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    User? user;
+    void initState(){
+      user=FirebaseAuth.instance.currentUser;
+      print(user?.uid.toString());
+    }
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Foodies',
@@ -36,3 +43,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+//user == null?const MainScreens():

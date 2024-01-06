@@ -25,6 +25,8 @@ class _MainScreensState extends State<MainScreens> {
           IconButton(
               onPressed: () async{
                 GoogleSignIn googleSignIn=GoogleSignIn();
+                FirebaseAuth _auth=FirebaseAuth.instance;
+                await _auth.signOut();
                 await googleSignIn.signOut();
                 Get.offAll(()=>WelcomeScreen());
                 //FirebaseAuth.instance.signOut();

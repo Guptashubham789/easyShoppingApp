@@ -17,7 +17,7 @@ class GoogleSignInController extends GetxController{
         final GoogleSignInAccount? googleSignInAccount=await googleSignIn.signIn();
 
         if(googleSignInAccount!=null){
-          EasyLoading.show(status: "please wait..");
+          EasyLoading.show(status: "please wait...");
           final GoogleSignInAuthentication googleSignInAuthentication=await googleSignInAccount.authentication;
 
           final AuthCredential credential=GoogleAuthProvider.credential(
@@ -43,7 +43,8 @@ class GoogleSignInController extends GetxController{
                 userStreet: '',
                 isActive: true, //user ko enable aur disable kar sakte haiadmin
                 isAdmin: false,
-                createdOn: DateTime.now()
+                createdOn: DateTime.now(),
+                userCity: '',
             );
               FirebaseFirestore.instance.collection('users')
                   .doc(user.uid).set(userModel.toMap());

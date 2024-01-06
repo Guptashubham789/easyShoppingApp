@@ -11,6 +11,7 @@ class UserModel{
   final bool isAdmin;
   final bool isActive;
   final dynamic createdOn;
+  final String userCity;
 
   UserModel({
     required this.uId,
@@ -25,6 +26,7 @@ class UserModel{
     required this.isActive,
     required this.isAdmin,
     required this.createdOn,
+    required this.userCity,
 });
   //Serialize the UserModel instance to a JSON map
 
@@ -42,6 +44,7 @@ class UserModel{
         'isAdmin': isAdmin,
         'isActive':isActive,
         'createdOn':createdOn,
+        'userCity':userCity,
       };
     }
 
@@ -60,7 +63,8 @@ class UserModel{
           userStreet: json['userstreet'],
           isActive: json['isActive'],
           isAdmin: json['isAdmin'],
-          createdOn: json['createdOn']
+          createdOn: json['createdOn'],
+          userCity: json['userCity']
       );
   }
 
