@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../controllers/get-device-token-controller.dart';
 import '../../utils/app-constant.dart';
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -16,6 +17,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final SignUpController signUpController=Get.put(SignUpController());
+  final GetDeviceTokenController getDeviceTokenController=Get.put(GetDeviceTokenController());
   TextEditingController userName=TextEditingController();
   TextEditingController userEmail=TextEditingController();
   TextEditingController userPhone=TextEditingController();
@@ -172,7 +174,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           String phone=userPhone.text.trim();
                           String city=userCity.text.trim();
                           String password=userPassword.text.trim();
-                          String userDeviceToken='';
+                          String userDeviceToken=getDeviceTokenController.deviceToken.toString();
                           if(name.isEmpty || email.isEmpty || phone.isEmpty || city.isEmpty || password.isEmpty){
                             Get.snackbar(
                                 "Error",

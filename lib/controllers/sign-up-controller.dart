@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:foodie/controllers/get-device-token-controller.dart';
 import 'package:foodie/models/user-model.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:get/get.dart';

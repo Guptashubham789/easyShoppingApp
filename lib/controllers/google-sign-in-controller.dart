@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:foodie/controllers/get-device-token-controller.dart';
 import 'package:foodie/models/user-model.dart';
 import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,9 @@ class GoogleSignInController extends GetxController{
    final FirebaseAuth auth=FirebaseAuth.instance;
 
    Future<void> signInWithGoogle() async{
+     final GetDeviceTokenController getDeviceTokenController=Get.put(GetDeviceTokenController());
      try{
+
         final GoogleSignInAccount? googleSignInAccount=await googleSignIn.signIn();
 
         if(googleSignInAccount!=null){
@@ -37,7 +40,7 @@ class GoogleSignInController extends GetxController{
                 useremail: user.email.toString(),
                 userphone: user.phoneNumber.toString(),
                 userImg: user.photoURL.toString(),
-                userDeviceToken: '',
+                userDeviceToken: getDeviceTokenController.deviceToken.toString(),
                 usercountry: '',
                 userAddress: '',
                 userStreet: '',

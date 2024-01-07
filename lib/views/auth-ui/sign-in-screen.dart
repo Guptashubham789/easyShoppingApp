@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/controllers/sign-in-controller.dart';
 import 'package:foodie/utils/app-constant.dart';
+import 'package:foodie/views/auth-ui/forget-password-screen.dart';
 import 'package:foodie/views/auth-ui/sign-up-screen.dart';
 import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:get/get.dart';
@@ -86,14 +87,19 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.0),
-                alignment: Alignment.centerRight,
-                child: Text("Forget Password?",
-                style: TextStyle(
-                  color: AppConstant.appSecondaryColor,
-                  fontWeight: FontWeight.bold
-                ),),
+              GestureDetector(
+                onTap: (){
+                  Get.to(()=>ForgetPasswordScreen());
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20.0),
+                  alignment: Alignment.centerRight,
+                  child: Text("Forget Password?",
+                  style: TextStyle(
+                    color: AppConstant.appSecondaryColor,
+                    fontWeight: FontWeight.bold
+                  ),),
+                ),
               ),
               SizedBox(
                 height: Get.height/30,
