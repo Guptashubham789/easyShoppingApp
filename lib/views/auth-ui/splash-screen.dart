@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie/controllers/get-user-data-controller.dart';
+import 'package:foodie/views/admin-panel/admin-main-screen.dart';
 import 'package:foodie/views/auth-ui/welcome-screen.dart';
 import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:get/get.dart';
@@ -17,14 +20,33 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  User? user=FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 8), () {
-      Get.to(()=>WelcomeScreen());
+    Timer(Duration(seconds: 4), () {
+      loggdin(context);
     });
   }
+  //it means cagr user login hai to hmesha login hi rhega jab tak logout nhi karta hai
+  Future<void> loggdin(BuildContext context)async{
+      //agr user nhi equal hai null ke to es condintion pr aaye
+      if(user!=null){
+        final GetUserDataController getUserDataController=Get.put(GetUserDataController());
+        var userData=await getUserDataController.getUserData(user!.uid);
+        if(userData[0]['isAdmin']==true){
+          Get.offAll(()=>AdminMainScreen());
+        }else{
+          Get.offAll(()=>MainScreens());
+        }
+      }else{
+        Get.to(()=>WelcomeScreen());
+      }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

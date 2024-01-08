@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:foodie/views/auth-ui/welcome-screen.dart';
+import 'package:foodie/widgets/custom-drawer-widget.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -18,24 +19,18 @@ class _MainScreensState extends State<MainScreens> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: AppConstant.appTextColor),
         centerTitle: true,
         backgroundColor: AppConstant.appSecondaryColor,
         title: Text("Dashboard",style: TextStyle(color: AppConstant.appTextColor),),
         actions: [
           IconButton(
-              onPressed: () async{
-                GoogleSignIn googleSignIn=GoogleSignIn();
-                FirebaseAuth _auth=FirebaseAuth.instance;
-                await _auth.signOut();
-                await googleSignIn.signOut();
-                Get.offAll(()=>WelcomeScreen());
+              onPressed: () {
                 //FirebaseAuth.instance.signOut();
-              }, icon: Icon(Icons.logout,color: Colors.white70,)),
+              }, icon: Icon(Icons.shopping_cart,color: Colors.white70,)),
         ],
       ),
-      body: Center(
-        child: Text("Main Screen User panel"),
-      ),
+      drawer: DrawerWidget(),
     );
   }
 }

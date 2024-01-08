@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie/controllers/get-user-data-controller.dart';
 import 'package:foodie/controllers/sign-in-controller.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:foodie/views/auth-ui/forget-password-screen.dart';
@@ -8,6 +9,8 @@ import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
+
+import '../admin-panel/admin-main-screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -20,6 +23,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final SignInController signInController=Get.put(SignInController());
+    final GetUserDataController getUserDataController=Get.put(GetUserDataController());
     TextEditingController userEmail=TextEditingController();
     TextEditingController userPassword=TextEditingController();
     return Scaffold(
@@ -132,15 +136,33 @@ class _SignInScreenState extends State<SignInScreen> {
                               email,
                               password
                           );
+
+
+                          var userData=await getUserDataController
+                              .getUserData(userCredential!.user!.uid);
+
                           if(userCredential!=null){
                             if(userCredential.user!.emailVerified){
-                              Get.snackbar(
-                                "Success",
-                                "Login Successfully!",
-                                snackPosition: SnackPosition.TOP,
-                                backgroundColor: AppConstant.appSecondaryColor,
-                                colorText: AppConstant.appTextColor,
-                              );
+                              if(userData[0]['isAdmin']==true){
+                                  Get.snackbar(
+                                    "Success Admin Login",
+                                    "Login Successfully!",
+                                    snackPosition: SnackPosition.TOP,
+                                    backgroundColor: AppConstant.appSecondaryColor,
+                                    colorText: AppConstant.appTextColor,
+                                  );
+                                  Get.offAll(()=>AdminMainScreen());
+                              }else{
+                                Get.snackbar(
+                                  "Success User Login",
+                                  "Login Successfully!",
+                                  snackPosition: SnackPosition.TOP,
+                                  backgroundColor: AppConstant.appSecondaryColor,
+                                  colorText: AppConstant.appTextColor,
+                                );
+                                Get.offAll(()=>MainScreens());
+                              }
+
                               Get.offAll(()=>MainScreens());
                             }else{
                               Get.snackbar(
