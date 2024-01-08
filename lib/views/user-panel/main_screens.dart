@@ -2,10 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:foodie/views/auth-ui/welcome-screen.dart';
+import 'package:foodie/widgets/banner-widget.dart';
 import 'package:foodie/widgets/custom-drawer-widget.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../widgets/heading-widget.dart';
 
 class MainScreens extends StatefulWidget {
   const MainScreens({super.key});
@@ -31,6 +34,34 @@ class _MainScreensState extends State<MainScreens> {
         ],
       ),
       drawer: DrawerWidget(),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Container(
+          child: Column(
+            children: [
+              SizedBox(
+                height: Get.height/90.0,
+              ),
+              //banners
+              BannerWidget(),
+
+              //heading
+             HeadingWidget(
+                 headingTitle: "Categories",
+                 headingSubTitle: "According to your budget",
+                 onTap: (){},
+                 buttonText: "See more >"
+             ),
+              HeadingWidget(
+                  headingTitle: "Flash Sale",
+                  headingSubTitle: "According to your budget",
+                  onTap: (){},
+                  buttonText: "See more >"
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
