@@ -4,10 +4,12 @@ import 'package:foodie/utils/app-constant.dart';
 import 'package:foodie/views/auth-ui/welcome-screen.dart';
 import 'package:foodie/widgets/banner-widget.dart';
 import 'package:foodie/widgets/custom-drawer-widget.dart';
+import 'package:foodie/widgets/flash-sale-widget.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../widgets/category-widget.dart';
 import '../../widgets/heading-widget.dart';
 
 class MainScreens extends StatefulWidget {
@@ -52,12 +54,14 @@ class _MainScreensState extends State<MainScreens> {
                  onTap: (){},
                  buttonText: "See more >"
              ),
+              CategoriesWidget(),
               HeadingWidget(
                   headingTitle: "Flash Sale",
                   headingSubTitle: "According to your budget",
                   onTap: (){},
                   buttonText: "See more >"
-              )
+              ),
+              FlashSaleWidget()
             ],
           ),
         ),
