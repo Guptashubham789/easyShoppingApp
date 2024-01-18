@@ -67,14 +67,14 @@ class FlashSaleWidget extends StatelessWidget {
                     return Row(
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(8.0),
-                            child: SingleChildScrollView(
+                          padding: EdgeInsets.all(2.0),
+
                               child: Container(
-                                child: FillImageCard(
-                                  
+                                //height: Get.height/3.0,
+                                child: TransparentImageCard(
                                   borderRadius: 10.0,
-                                  width: Get.width/3.5,
-                                  height: Get.height/4.6,
+                                  width: Get.width/3.0,
+                                  height: Get.height/4.0,
                                   imageProvider: CachedNetworkImageProvider(
                                     productModel.productImages[0],
                                   ),
@@ -82,22 +82,22 @@ class FlashSaleWidget extends StatelessWidget {
                                       child: Text(
                                         productModel.productName,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(color: Colors.black87,fontSize: 10.0),)
+                                        style: TextStyle(color: Colors.white,fontSize: 10.0),)
                                   ),
 
                                   footer: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    //crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("Rs ${productModel.salePrice}",style: TextStyle(fontSize: 10.0),),
-                                      SizedBox(width: 25.0,),
-                                      Text(" ${productModel.fullPrice}",style: TextStyle(fontSize: 10.0,decoration: TextDecoration.lineThrough,color: AppConstant.appSecondaryColor),)
+                                      Text("Rs ${productModel.salePrice}",style: TextStyle(fontSize: 5.0,color: Colors.white,),),
+                                      SizedBox(width: 70.0,),
+                                      Text(" ${productModel.fullPrice}",style: TextStyle(fontSize: 5.0,decoration: TextDecoration.lineThrough,color: AppConstant.appSecondaryColor),)
                                     ],
                                   ),
-                                  tagSpacing: 10.0,
+                                  // tagSpacing: 10.0,
                                 ),
                               ),
                             ),
-                          ),
+
 
 
                       ],

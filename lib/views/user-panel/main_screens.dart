@@ -61,7 +61,10 @@ class _MainScreensState extends State<MainScreens> {
                   onTap: (){},
                   buttonText: "See more >"
               ),
-              FlashSaleWidget()
+              FlashSaleWidget(),
+              SizedBox(
+                height: 100.0,
+              )
             ],
           ),
         ),
