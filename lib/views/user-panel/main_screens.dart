@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:foodie/views/auth-ui/welcome-screen.dart';
+import 'package:foodie/views/user-panel/all-categories-screen.dart';
 import 'package:foodie/widgets/banner-widget.dart';
 import 'package:foodie/widgets/custom-drawer-widget.dart';
 import 'package:foodie/widgets/flash-sale-widget.dart';
@@ -51,14 +52,18 @@ class _MainScreensState extends State<MainScreens> {
              HeadingWidget(
                  headingTitle: "Categories",
                  headingSubTitle: "According to your budget",
-                 onTap: (){},
+                 onTap: (){
+                  Get.to(()=>AllCategoriesScreen());
+                 },
                  buttonText: "See more >"
              ),
               CategoriesWidget(),
               HeadingWidget(
                   headingTitle: "Flash Sale",
                   headingSubTitle: "According to your budget",
-                  onTap: (){},
+                  onTap: (){
+
+                  },
                   buttonText: "See more >"
               ),
               FlashSaleWidget(),

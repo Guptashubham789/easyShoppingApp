@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_card/image_card.dart';
 
+import '../views/user-panel/single-category-products.dart';
+
 class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget({super.key});
 
@@ -54,17 +56,22 @@ class CategoriesWidget extends StatelessWidget {
                     );
                     return Row(
                       children: [
-                          Padding(padding: EdgeInsets.all(10.0),
-                          child: Container(
-                            child: TransparentImageCard(
-                              borderRadius: 10.0,
-                              width: Get.width/4.0,
-                              height: Get.height/8,
-                              imageProvider: CachedNetworkImageProvider(categoriesModel.categoryImg),
-                              title: Center(child: Text(categoriesModel.categoryName,style: TextStyle(color: Colors.red,fontSize: 8.0),)) ,
+                          GestureDetector(
+                            onTap: (){
+                              Get.to(()=>SingleCategoriProduct(categoryId:categoriesModel.categoryId,categoryName:categoriesModel.categoryName));
+                            },
+                            child: Padding(padding: EdgeInsets.all(10.0),
+                            child: Container(
+                              child: TransparentImageCard(
+                                borderRadius: 10.0,
+                                width: Get.width/4.0,
+                                height: Get.height/8,
+                                imageProvider: CachedNetworkImageProvider(categoriesModel.categoryImg),
+                                title: Center(child: Text(categoriesModel.categoryName,style: TextStyle(color: Colors.red,fontSize: 8.0),)) ,
 
+                              ),
                             ),
-                          ),
+                            ),
                           ),
 
                       ],

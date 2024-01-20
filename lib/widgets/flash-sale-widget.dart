@@ -68,7 +68,6 @@ class FlashSaleWidget extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsets.all(2.0),
-
                               child: Container(
                                 //height: Get.height/3.0,
                                 child: TransparentImageCard(
