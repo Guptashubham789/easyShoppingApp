@@ -36,7 +36,7 @@ class FlashSaleWidget extends StatelessWidget {
           // yani ki jo hum document ko fetch karna chah rhe h kya vh empty to nhi hai agr empty hai to yha par hum simple return karvayenge
           if(snapshot.data!.docs.isEmpty){
             return Center(
-              child: Text('No flash sale found!!'),
+              child: Text('Today is not sale 😄!!',style: TextStyle(color: AppConstant.appSecondaryColor,fontSize: 16,fontFamily: 'serif'),),
             );
           }
           //

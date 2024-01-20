@@ -24,7 +24,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppConstant.appSecondaryColor,
-
+        iconTheme: IconThemeData(color: AppConstant.appTextColor),
         title: Text('All Categories',style: TextStyle(color: AppConstant.appTextColor),),
       ),
       body: FutureBuilder(future:FirebaseFirestore.instance.collection('categories').get(),

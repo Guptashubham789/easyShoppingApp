@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:foodie/views/auth-ui/welcome-screen.dart';
 import 'package:foodie/views/user-panel/all-categories-screen.dart';
+import 'package:foodie/views/user-panel/all-flashsale-screen.dart';
+import 'package:foodie/views/user-panel/all-products-screen.dart';
+import 'package:foodie/widgets/all-products-widget.dart';
 import 'package:foodie/widgets/banner-widget.dart';
 import 'package:foodie/widgets/custom-drawer-widget.dart';
 import 'package:foodie/widgets/flash-sale-widget.dart';
@@ -62,14 +65,22 @@ class _MainScreensState extends State<MainScreens> {
                   headingTitle: "Flash Sale",
                   headingSubTitle: "According to your budget",
                   onTap: (){
-
+                    Get.to(()=>AllFlashSaleScreen());
                   },
                   buttonText: "See more >"
               ),
               FlashSaleWidget(),
-              SizedBox(
-                height: 100.0,
-              )
+              HeadingWidget(
+                  headingTitle: "All Products",
+                  headingSubTitle: "According to your budget",
+                  onTap: (){
+                    Get.to(()=>AllProductsScreen());
+                  },
+                  buttonText: "See more >"
+              ),
+
+               AllProductsWidget(),
+
             ],
           ),
         ),
