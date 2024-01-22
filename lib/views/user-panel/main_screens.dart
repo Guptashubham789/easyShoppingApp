@@ -64,6 +64,7 @@ class _MainScreensState extends State<MainScreens> {
               HeadingWidget(
                   headingTitle: "Flash Sale",
                   headingSubTitle: "According to your budget",
+
                   onTap: (){
                     Get.to(()=>AllFlashSaleScreen());
                   },

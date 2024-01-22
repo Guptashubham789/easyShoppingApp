@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:foodie/utils/app-constant.dart';
+import 'package:lottie/lottie.dart';
 class HeadingWidget extends StatelessWidget {
   final String headingTitle;
   final String headingSubTitle;
   final VoidCallback onTap;
   final String buttonText;
+  //final String image;
   const HeadingWidget({super.key,
     required this.headingTitle,
     required this.headingSubTitle,
     required this.onTap,
+    //required this.image,
     required this.buttonText,
   });
 
@@ -34,10 +37,11 @@ class HeadingWidget extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         fontSize: 12.0,
                         color: Colors.grey.shade800,
-                      )),
-
+                      )
+                  ),
                 ],
               ),
+              //Lottie.asset(image,height: 50,width: 50),
               GestureDetector(
                 onTap: onTap,
                 child: Container(

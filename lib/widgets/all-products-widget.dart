@@ -8,6 +8,7 @@ import 'package:image_card/image_card.dart';
 
 import '../models/product-model.dart';
 import '../utils/app-constant.dart';
+import '../views/user-panel/product-details-screen.dart';
 class AllProductsWidget extends StatelessWidget {
   const AllProductsWidget({super.key});
 
@@ -70,7 +71,7 @@ class AllProductsWidget extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: (){
-                        //Get.to(()=>SingleCategoriProduct(categoryId:categoriesModel.categoryId,categoryName:categoriesModel.categoryName));
+                        Get.to(()=>ProductDetailsScreen(productModel:productModel));
                       },
                       child: Padding(padding: EdgeInsets.all(8.0),
                         child: Container(

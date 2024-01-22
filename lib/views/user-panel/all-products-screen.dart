@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie/views/user-panel/product-details-screen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_card/image_card.dart';
@@ -82,7 +83,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          //Get.to(()=>SingleCategoriProduct(categoryId:categoriesModel.categoryId,categoryName:categoriesModel.categoryName));
+                          Get.to(()=>ProductDetailsScreen(productModel:productModel));
                         },
                         child: Padding(padding: EdgeInsets.all(8.0),
                           child: Container(
