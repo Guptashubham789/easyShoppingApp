@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:foodie/views/auth-ui/splash-screen.dart';
 import 'package:foodie/views/user-panel/main_screens.dart';
@@ -10,6 +11,11 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     //options: DefaultFirebaseOptions.currentPlatform,
+  );
+  //mobile auto rotate setting
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp])
+      .then((_) => runApp(const MyApp()),
   );
   runApp(const MyApp(
 

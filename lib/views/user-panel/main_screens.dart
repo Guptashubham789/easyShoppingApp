@@ -5,6 +5,7 @@ import 'package:foodie/views/auth-ui/welcome-screen.dart';
 import 'package:foodie/views/user-panel/all-categories-screen.dart';
 import 'package:foodie/views/user-panel/all-flashsale-screen.dart';
 import 'package:foodie/views/user-panel/all-products-screen.dart';
+import 'package:foodie/views/user-panel/cart-screen/cart-screen.dart';
 import 'package:foodie/widgets/all-products-widget.dart';
 import 'package:foodie/widgets/banner-widget.dart';
 import 'package:foodie/widgets/custom-drawer-widget.dart';
@@ -22,7 +23,15 @@ class MainScreens extends StatefulWidget {
   @override
   State<MainScreens> createState() => _MainScreensState();
 }
-
+void ssg(){
+  Get.snackbar(
+    "Error",
+    "Please enter the email..",
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: AppConstant.appSecondaryColor,
+    colorText: AppConstant.appTextColor,
+  );
+}
 class _MainScreensState extends State<MainScreens> {
   @override
   Widget build(BuildContext context) {
@@ -33,10 +42,16 @@ class _MainScreensState extends State<MainScreens> {
         backgroundColor: AppConstant.appSecondaryColor,
         title: Text("Dashboard",style: TextStyle(color: AppConstant.appTextColor),),
         actions: [
-          IconButton(
-              onPressed: () {
-                //FirebaseAuth.instance.signOut();
-              }, icon: Icon(Icons.shopping_cart,color: Colors.white70,)),
+
+             Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                  onPressed: () {
+                    //ssg();
+                    Get.to(()=>CartScreen());
+                  }, icon: Icon(Icons.shopping_cart,color: Colors.white70,)),
+            ),
+
         ],
       ),
       drawer: DrawerWidget(),

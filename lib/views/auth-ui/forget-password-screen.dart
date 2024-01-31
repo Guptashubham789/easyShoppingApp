@@ -24,7 +24,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: AppConstant.appSecondaryColor,
-
+        iconTheme: IconThemeData(color: AppConstant.appTextColor),
         title: Text("Forget Screen",style: TextStyle(color: Colors.white),),
       ),
       body: SingleChildScrollView(

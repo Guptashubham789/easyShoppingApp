@@ -4,13 +4,16 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+//cart screen 
+step 1: sabse phle hum cart ki screen ko design kar lenge ek screen bnaa ke 
+step 2: ab hum model bnaayenge and usme hum 2 chije add kar lenge product ki qnty and product total price 
+and fields productid,categoryid,productname,categoryname etc,
+step 3: ab hum sabse phle product details screen par jaake ek method create karenge checkProductAddToCart() and eske phle hum user ki current id ko nikal lenge
+step 4: ab hum ek collation bnayenge firestore me cart name se jo user ki id method se hum get kar rhe the ab hum use cart ke collation me insert me karenge and ek documnet bnayenge
+//
+final DocumentReference documentReference=FirebaseFirestore.instance
+.collection('cart')
+.doc(uId)
+.collection('cartOrders') //jo bhi apne cart ke ander product store honge usko apni id ke base par insert karenge
+.doc(widget.productModel.productId);
+har user ko usi ke product dikhane hai 
