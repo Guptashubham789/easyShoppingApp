@@ -42,7 +42,6 @@ class _MainScreensState extends State<MainScreens> {
         backgroundColor: AppConstant.appSecondaryColor,
         title: Text("Dashboard",style: TextStyle(color: AppConstant.appTextColor),),
         actions: [
-
              Padding(
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
@@ -51,7 +50,6 @@ class _MainScreensState extends State<MainScreens> {
                     Get.to(()=>CartScreen());
                   }, icon: Icon(Icons.shopping_cart,color: Colors.white70,)),
             ),
-
         ],
       ),
       drawer: DrawerWidget(),

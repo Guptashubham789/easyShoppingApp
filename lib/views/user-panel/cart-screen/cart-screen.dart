@@ -1,7 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swipe_action_cell/core/cell.dart';
+import 'package:foodie/models/cart-model.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_card/image_card.dart';
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
@@ -10,52 +17,127 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  User? user=FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppConstant.appTextColor),
         backgroundColor: AppConstant.appSecondaryColor,
-        title: Center(child: Text('Cart Screen',style: TextStyle(color: AppConstant.appTextColor,fontFamily: 'serif'),)),
+        title: Text('Cart Screen',style: TextStyle(color: AppConstant.appTextColor,fontFamily: 'serif'),),
       ),
-      body: Container(
-        child: ListView.builder(
-          itemCount: 20,
-            shrinkWrap: true,
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context,index){
-              return Card(
-                color: AppConstant.appTextColor,
-                elevation: 5,
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: AppConstant.appSecondaryColor,
-                    child: Text('N'),
-                  ),
-                  title: Text('SSG'),
-                  subtitle: Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('2200'),
-                      SizedBox(width: Get.width/20.0,),
-                      CircleAvatar(
-                        radius: 14.0,
-                        backgroundColor: AppConstant.appSecondaryColor,
-                        child: Text('+'),
-                      ),
-                      SizedBox(width: 20,),
-                      CircleAvatar(
-                        radius: 14.0,
-                        backgroundColor: AppConstant.appSecondaryColor,
-                        child: Text('-'),
-                      ),
-                    ],
-                  ),
+      body:StreamBuilder(
+          stream :FirebaseFirestore.instance
+              .collection('cart')
+          .doc(user!.uid)
+          .collection('cartOrders')
+              .snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            //agr koi error hai hmare snapshot me to yh condition chale
+            if(snapshot.hasError){
+              return Center(
+                child: Text('Error'),
+              );
+            }
+            //agr waiting me h to kya return kro
+            if(snapshot.connectionState==ConnectionState.waiting){
+              return Container(
+                height: Get.height/5.5,
+                child: Center(
+                  child: CupertinoActivityIndicator(),
                 ),
               );
             }
-        )
-        ),
+            // yani ki jo hum document ko fetch karna chah rhe h kya vh empty to nhi hai agr empty hai to yha par hum simple return karvayenge
+            if(snapshot.data!.docs.isEmpty){
+              return Center(
+                child: Text('No flash-sale product found!!'),
+              );
+            }
+            //
+            if(snapshot.data!=null){
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context,index){
+                    //yha par ek var par product ke data kka snapshot nikal lenge jisse hum id ke through data ko product model me gate kar sakte hai
+                    final productsData=snapshot.data!.docs[index];
+                    CartModel cartModel=CartModel(
+                        productId: productsData['productId'],
+                        categoryId: productsData['categoryId'],
+                        productName: productsData['productName'],
+                        categoryName: productsData['categoryName'],
+                        salePrice: productsData['salePrice'],
+                        fullPrice: productsData['fullPrice'],
+                        productImages:productsData['productImages'],
+                        deliveryTime: productsData['deliveryTime'],
+                        isSale: productsData['isSale'],
+                        productDescription: productsData['productDescription'],
+                        createdAt: productsData['createdAt'],
+                        updatedAt:productsData['updatedAt'],
+                        productQuantity:productsData['productQuantity'],
+                        productTotalPrice:productsData['productTotalPrice'],
+                    );
+                  return SwipeActionCell(
+                      key: ObjectKey(cartModel.productId),
+                      trailingActions: [
+                        SwipeAction(
+                          title: "Delete",
+                            forceAlignmentToBoundary: true,
+                            performsFirstActionWithFullSwipe: true,
+                            onTap: (CompletionHandler handler) async{
+                            await FirebaseFirestore.instance
+                                .collection('cart')
+                                .doc(user!.uid)
+                            .collection('cartOrders')
+                            .doc(cartModel.productId)
+                            .delete();
+                              Get.snackbar(
+                                "Item Deleted",
+                                "",
+                                snackPosition: SnackPosition.TOP,
+                                backgroundColor: AppConstant.appSecondaryColor,
+                                colorText: AppConstant.appTextColor,
+                              );
+                            },
+                        )
+                      ],
+                      child: Card(
+                        elevation: 14.0,
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(cartModel.productImages[0]),
+                          ),
+                          title: Text(cartModel.productName),
+                          subtitle: Row(
+                            children: [
+                              Text(cartModel.productTotalPrice.toString()),
+                              SizedBox(width: Get.width/20.0,),
+                              CircleAvatar(
+                                radius: 14.0,
+                                backgroundColor: AppConstant.appSecondaryColor,
+                                child: Text("-"),
+                              ),
+                              SizedBox(width: Get.width/20.0,),
+                              CircleAvatar(
+                                radius: 14.0,
+                                backgroundColor: AppConstant.appSecondaryColor,
+                                child: Text("+"),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                  );
+                  }
+              );
+
+            }
+
+            return Container();
+          }
+      ),
       bottomNavigationBar: Container(
         margin: EdgeInsets.only(bottom: 5.5),
         child: Row(
@@ -66,7 +148,7 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     Text(' Total : ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,fontFamily: 'serif'),),
                     SizedBox(width: Get.width/40,),
-                    Text('1200'),
+                    Text("122"),
                     SizedBox(width: Get.width/20,),
                     Material(
                       child: Container(
@@ -92,3 +174,4 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 }
+

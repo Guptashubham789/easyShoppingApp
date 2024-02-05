@@ -5,10 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie/models/cart-model.dart';
 import 'package:foodie/models/product-model.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+
+import 'cart-screen/cart-screen.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   ProductModel productModel;
@@ -27,7 +30,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         backgroundColor: AppConstant.appSecondaryColor,
         iconTheme: IconThemeData(color: AppConstant.appTextColor),
         title: Text('Products Details',style: TextStyle(color: AppConstant.appTextColor),),
-
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+                onPressed: () {
+                  //ssg();
+                  Get.to(()=>CartScreen());
+                }, icon: Icon(Icons.shopping_cart,color: Colors.white70,)),
+          ),
+        ],
       ),
       body: Container(
         child: Column(
@@ -159,13 +171,72 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Future<void> checkProductAddToCart({
-    required String uId}) async{
+    required String uId,
+    int quantityIncrement=1
+  }) async{
     final DocumentReference documentReference=FirebaseFirestore.instance
         .collection('cart')
         .doc(uId)
         .collection('cartOrders') //jo bhi apne cart ke ander product store honge usko apni id ke base par insert karenge
         .doc(widget.productModel.productId.toString() );
 
+    //jitne bhi doc aapko milenge use hum snapshot me store kr lenge
+    DocumentSnapshot snapshot=await documentReference.get();
+
+    //agr humara ek bar koi product add ho jayega to use hum phir se add nhi karenge
+    //and uski qnty ko hum bs increase karenge and price ko
+    if(snapshot.exists){
+      int currentQuantity=snapshot['productQuantity'];
+      int updatedQuantity=currentQuantity+quantityIncrement;
+      double totalPrice=
+          double.parse(widget.productModel.isSale?widget.productModel.salePrice:widget.productModel.fullPrice)*updatedQuantity;
+          await documentReference.update({
+            'productQuantity': updatedQuantity,
+            'productTotalPrice':totalPrice,
+          });
+      Get.snackbar(
+        "Product exist in cart!!",
+        "",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppConstant.appSecondaryColor,
+        colorText: AppConstant.appTextColor,
+      );
+    }else{
+      //else ke andr ek baar product add ho jayega to dubara se vhi product add nhi karega
+      //us product ki qnty ko increase kar dega database me and if ki condition chalega usme
+      await FirebaseFirestore.instance.collection('cart').doc(uId).set(
+        {
+          'uId':uId,
+          'createdAt':DateTime.now()
+        }
+      );
+      CartModel cartModel=CartModel(
+          productId: widget.productModel.productId,
+          categoryId: widget.productModel.categoryId,
+          productName: widget.productModel.productName,
+          categoryName: widget.productModel.categoryName,
+          salePrice: widget.productModel.salePrice,
+          fullPrice: widget.productModel.fullPrice,
+          productImages: widget.productModel.productImages,
+          deliveryTime: widget.productModel.deliveryTime,
+          isSale: widget.productModel.isSale,
+          productDescription: widget.productModel.productDescription,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+          productQuantity: 1,
+          productTotalPrice: double.parse(widget.productModel.isSale?widget.productModel.salePrice:widget.productModel.fullPrice),
+      );
+      await documentReference.set(cartModel.toMap());
+      Get.snackbar(
+        "",
+        "Product add to cart!!!",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppConstant.appSecondaryColor,
+        colorText: AppConstant.appTextColor,
+        icon: Icon(Icons.shopping_cart)
+        
+      );
+    }
   }
 
 }
