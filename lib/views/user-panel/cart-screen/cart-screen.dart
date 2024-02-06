@@ -9,6 +9,8 @@ import 'package:foodie/utils/app-constant.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_card/image_card.dart';
+
+import '../../../controllers/cart-price-controller.dart';
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
@@ -18,6 +20,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   User? user=FirebaseAuth.instance.currentUser;
+  final ProductPriceController priceController=Get.put(ProductPriceController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,6 +82,8 @@ class _CartScreenState extends State<CartScreen> {
                         productQuantity:productsData['productQuantity'],
                         productTotalPrice:productsData['productTotalPrice'],
                     );
+                    //calculate cart price
+                    priceController.fetchProductPrice();
                   return SwipeActionCell(
                       key: ObjectKey(cartModel.productId),
                       trailingActions: [
@@ -114,16 +119,52 @@ class _CartScreenState extends State<CartScreen> {
                             children: [
                               Text(cartModel.productTotalPrice.toString()),
                               SizedBox(width: Get.width/20.0,),
-                              CircleAvatar(
-                                radius: 14.0,
-                                backgroundColor: AppConstant.appSecondaryColor,
-                                child: Text("-"),
+                              GestureDetector(
+                                onTap: () async{
+                                  //agr item ki qty badi h 1 se
+                                  if(cartModel.productQuantity>1){
+                                   await FirebaseFirestore.instance
+                                        .collection('cart')
+                                        .doc(user!.uid)
+                                        .collection('cartOrders')
+                                        .doc(cartModel.productId)
+                                        .update(
+                                        {
+                                          'productQuantity':cartModel.productQuantity-1,
+                                          'productTotalPrice': (double.parse(cartModel.fullPrice)*(cartModel.productQuantity-1))
+                                        });
+                                  }
+                                },
+                                child: CircleAvatar(
+                                  radius: 14.0,
+                                  backgroundColor: AppConstant.appSecondaryColor,
+                                  child: Text("-"),
+                                ),
                               ),
                               SizedBox(width: Get.width/20.0,),
-                              CircleAvatar(
-                                radius: 14.0,
-                                backgroundColor: AppConstant.appSecondaryColor,
-                                child: Text("+"),
+                              Text(cartModel.productQuantity.toString()),
+                              SizedBox(width: Get.width/20.0,),
+                              GestureDetector(
+                                onTap: () async{
+                                  //agr item ki qty badi h 0 se to yah ++ hoga
+                                  if(cartModel.productQuantity>0){
+                                   await FirebaseFirestore.instance
+                                        .collection('cart')
+                                        .doc(user!.uid)
+                                        .collection('cartOrders')
+                                        .doc(cartModel.productId)
+                                        .update(
+                                        {
+                                          'productQuantity':cartModel.productQuantity+1,
+                                          'productTotalPrice': double.parse(cartModel.fullPrice)+double.parse(cartModel.fullPrice)*(cartModel.productQuantity)
+                                        });
+                                  }
+                                },
+                                child: CircleAvatar(
+                                  radius: 14.0,
+                                  backgroundColor: AppConstant.appSecondaryColor,
+                                  child: Text("+"),
+                                ),
                               )
                             ],
                           ),
@@ -148,7 +189,8 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     Text(' Total : ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,fontFamily: 'serif'),),
                     SizedBox(width: Get.width/40,),
-                    Text("122"),
+                    Obx(
+                        ()=>Text(priceController.totalPrice.value.toString(),style: TextStyle(color: Colors.red,fontFamily: 'serif',fontWeight: FontWeight.bold,fontSize: 14),)),
                     SizedBox(width: Get.width/20,),
                     Material(
                       child: Container(

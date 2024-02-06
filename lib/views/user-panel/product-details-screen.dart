@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:foodie/models/cart-model.dart';
 import 'package:foodie/models/product-model.dart';
 import 'package:foodie/utils/app-constant.dart';
@@ -41,27 +42,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            SizedBox(height: Get.height/60,),
-             CarouselSlider(
-        items: widget.productModel.productImages.map(
-            (imageUrl) => ClipRRect(
-          borderRadius:BorderRadius.circular(10.0),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              SizedBox(height: Get.height/60,),
+               CarouselSlider(
+          items: widget.productModel.productImages.map(
+              (imageUrl) => ClipRRect(
+            borderRadius:BorderRadius.circular(10.0),
 
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        fit: BoxFit.cover,
-        width: Get.width-10,
-        placeholder: (context,url)=>ColoredBox(
-          color: Colors.white,
-          child:Center(
-            child: CupertinoActivityIndicator(),
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          fit: BoxFit.cover,
+          width: Get.width-10,
+          placeholder: (context,url)=>ColoredBox(
+            color: Colors.white,
+            child:Center(
+              child: CupertinoActivityIndicator(),
+            ),
           ),
+          errorWidget: (context,url,error)=>Icon(Icons.error),
         ),
-        errorWidget: (context,url,error)=>Icon(Icons.error),
-      ),
     ),
     ).toList(),
     options: CarouselOptions(
@@ -72,99 +74,102 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     viewportFraction: 1,
     ),
     ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                          alignment: Alignment.topLeft,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(widget.productModel.productName),
-                              Icon(Icons.favorite_outline)
-                            ],
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                          alignment: Alignment.topLeft,
-                          child: Row(
-                            children: [
-                              widget.productModel.isSale==true && widget.productModel.salePrice !=''?
-                              Text("Price : "+widget.productModel.salePrice):Text("Price : "+widget.productModel.fullPrice),
-                            ],
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                          alignment: Alignment.topLeft,
-                          child: Text("Category : "+widget.productModel.categoryName)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(widget.productModel.productDescription)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Material(
-                            child: Container(
-                                width: Get.width/3.0,
-                                height: Get.height/16,
-                                decoration: BoxDecoration(
-                                  color: AppConstant.appSecondaryColor,
-                                  borderRadius: BorderRadius.circular(20),
-
-                                ),
-                                child: TextButton(
-                                    child: Text('Add to cart',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
-                                    onPressed: () async{
-                                      await checkProductAddToCart(uId:user!.uid);
-                                    }
-                                )
-                            ),
-                          ),
-                          SizedBox(width: Get.width/5.0,),
-                          Material(
-                            child: Container(
-                                width: Get.width/3.0,
-                                height: Get.height/16,
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(20),
-
-                                ),
-                                child: TextButton(
-                                    child: Text('WhatsApp',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
-                                    onPressed: () {
-                                      //   Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                                      //       SignInScreen()));
-                                      // },
-                                    }
-                                )
-                            ),
-                          ),
-                        ],
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(widget.productModel.productName),
+                                Icon(Icons.favorite_outline)
+                              ],
+                            )),
                       ),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              children: [
+                                widget.productModel.isSale==true && widget.productModel.salePrice !=''?
+                                Text("Price : "+widget.productModel.salePrice):Text("Price : "+widget.productModel.fullPrice),
+                              ],
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Text("Category : "+widget.productModel.categoryName)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(widget.productModel.productDescription)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Material(
+                              child: Container(
+                                  width: Get.width/3.0,
+                                  height: Get.height/16,
+                                  decoration: BoxDecoration(
+                                    color: AppConstant.appSecondaryColor,
+                                    borderRadius: BorderRadius.circular(20),
+
+                                  ),
+                                  child: TextButton(
+                                      child: Text('Add to cart',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
+                                      onPressed: () async{
+                                       // EasyLoading.show(status: "Add Product in item..");
+                                        await checkProductAddToCart(uId:user!.uid);
+                                        //EasyLoading.dismiss();
+                                      }
+                                  )
+                              ),
+                            ),
+                            SizedBox(width: Get.width/5.0,),
+                            Material(
+                              child: Container(
+                                  width: Get.width/3.0,
+                                  height: Get.height/16,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    borderRadius: BorderRadius.circular(20),
+
+                                  ),
+                                  child: TextButton(
+                                      child: Text('WhatsApp',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
+                                      onPressed: () {
+                                        //   Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                        //       SignInScreen()));
+                                        // },
+                                      }
+                                  )
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -195,10 +200,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             'productTotalPrice':totalPrice,
           });
       Get.snackbar(
-        "Product exist in cart!!",
-        "",
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: AppConstant.appSecondaryColor,
+        "Cart",
+        "Productis already added..",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
         colorText: AppConstant.appTextColor,
       );
     }else{
@@ -227,14 +232,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           productTotalPrice: double.parse(widget.productModel.isSale?widget.productModel.salePrice:widget.productModel.fullPrice),
       );
       await documentReference.set(cartModel.toMap());
+
       Get.snackbar(
-        "",
-        "Product add to cart!!!",
+        "Cart",
+        "Product add in cart..",
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppConstant.appSecondaryColor,
+        backgroundColor: Colors.redAccent,
         colorText: AppConstant.appTextColor,
-        icon: Icon(Icons.shopping_cart)
-        
       );
     }
   }
