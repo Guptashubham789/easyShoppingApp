@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:foodie/models/cart-model.dart';
 import 'package:foodie/utils/app-constant.dart';
+import 'package:foodie/views/user-panel/cart-screen/checkout-screen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_card/image_card.dart';
@@ -201,7 +202,9 @@ class _CartScreenState extends State<CartScreen> {
                           borderRadius: BorderRadius.circular(20.0)
                         ),
                         child: TextButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              Get.to(()=>CheckoutScren());
+                            },
                             child: Text('Checkout',
                             style: TextStyle(color: AppConstant.appTextColor),)
                         ),

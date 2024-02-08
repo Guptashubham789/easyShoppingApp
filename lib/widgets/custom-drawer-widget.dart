@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/utils/app-constant.dart';
+import 'package:foodie/views/user-panel/all-products-screen.dart';
+import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -50,6 +52,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ListTile(
+              onTap: (){
+                Get.to(()=>MainScreens());
+              },
               titleAlignment: ListTileTitleAlignment.center,
               title: Text('Home',style: TextStyle(color: AppConstant.appTextColor),),
               leading: Icon(Icons.home,color: AppConstant.appTextColor,),
@@ -59,6 +64,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ListTile(
+              onTap: (){
+                Get.to(()=>AllProductsScreen());
+              },
               titleAlignment: ListTileTitleAlignment.center,
               title: Text('Products',style: TextStyle(color: AppConstant.appTextColor),),
               leading: Icon(Icons.add_shopping_cart,color: AppConstant.appTextColor,),

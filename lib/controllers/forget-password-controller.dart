@@ -16,7 +16,6 @@ class ForgetPasswordController extends GetxController{
       ) async{
     try{
       EasyLoading.show(status: "Please wait....");
-
       await _auth.sendPasswordResetEmail(email: userEmail);
       Get.snackbar(
         "Request sent successfully",

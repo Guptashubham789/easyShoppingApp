@@ -147,7 +147,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   Get.snackbar(
                                     "Success Admin Login",
                                     "Login Successfully!",
-                                    snackPosition: SnackPosition.TOP,
+                                    snackPosition: SnackPosition.BOTTOM,
                                     backgroundColor: AppConstant.appSecondaryColor,
                                     colorText: AppConstant.appTextColor,
                                   );
@@ -156,7 +156,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 Get.snackbar(
                                   "Success User Login",
                                   "Login Successfully!",
-                                  snackPosition: SnackPosition.TOP,
+                                  snackPosition: SnackPosition.BOTTOM,
                                   backgroundColor: AppConstant.appSecondaryColor,
                                   colorText: AppConstant.appTextColor,
                                 );

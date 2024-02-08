@@ -11,6 +11,4 @@ class GetUserDataController extends GetxController{
   return userData.docs;
   }
 
-
-
 }

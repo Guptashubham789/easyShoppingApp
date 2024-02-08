@@ -19,6 +19,7 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
+
 class _SplashScreenState extends State<SplashScreen> {
   User? user=FirebaseAuth.instance.currentUser;
   @override
@@ -68,7 +69,6 @@ class _SplashScreenState extends State<SplashScreen> {
               alignment: Alignment.center,
               child: Text(AppConstant.appPowerBy,style: TextStyle(color: Colors.black87,fontSize: 14,fontWeight: FontWeight.bold),),
             )
-
           ],
         ),
       ),

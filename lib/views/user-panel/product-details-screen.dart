@@ -7,8 +7,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:foodie/models/cart-model.dart';
+import 'package:foodie/models/favorite-model.dart';
 import 'package:foodie/models/product-model.dart';
 import 'package:foodie/utils/app-constant.dart';
+import 'package:foodie/views/user-panel/favorite-screen/favorite-screen.dart';
+import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -90,7 +93,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(widget.productModel.productName),
-                                Icon(Icons.favorite_outline)
+                                 GestureDetector(
+                                   onTap: (){
+                                     addFavoriteAddtoCart();
+                                   },
+                                     child: Icon(Icons.favorite_outline)
+                                 )
+
                               ],
                             )),
                       ),
@@ -174,16 +183,102 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
     );
   }
+  Future<void> addFavoriteAddtoCart()async {
+    Get.bottomSheet(
+      Container(
+        height: Get.height*2.0,
+        width: Get.width*8.0,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(
+              top: Radius.circular(16.0)),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 50,),
+              Image.asset('assets/icons/favourite.png',height: Get.height/6.0,),
+              SizedBox(height: 50,),
+              Material(
+                child: Container(
+                    width: Get.width/1.2,
+                    height: Get.height/12,
+                    decoration: BoxDecoration(
+                      color: AppConstant.appSecondaryColor,
+                      borderRadius: BorderRadius.circular(20),
 
+                    ),
+                    child: TextButton.icon(
+                      icon: Icon(Icons.favorite,color: Colors.white,),
+                      label: Text('Add to Wishlist',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
+                      onPressed: () {
+                        addToFavorite(uId:user!.uid);
+                      },
+                    )
+                ),
+              ),
+              SizedBox(height: 20,),
+
+            ],
+          ),
+        ),
+      )
+    );
+
+
+  }
+  //add to wishlist
+  Future<void> addToFavorite({required String uId})async {
+    final DocumentReference documentReference=FirebaseFirestore.instance
+        .collection('favorite')
+        .doc(uId)
+        .collection('favoriteProduct')
+        .doc(widget.productModel.productId.toString());
+    //jitne bhi doc aapko milenge use hum snapshot me store kr lenge
+    DocumentSnapshot snapshot=await documentReference.get();
+    await FirebaseFirestore.instance.collection('favorite').doc(uId).set(
+        {
+          'uId':uId,
+          'createdAt':DateTime.now()
+        }
+    );
+    FavoriteModel cartModel=FavoriteModel(
+      productId: widget.productModel.productId,
+      categoryId: widget.productModel.categoryId,
+      productName: widget.productModel.productName,
+      categoryName: widget.productModel.categoryName,
+      salePrice: widget.productModel.salePrice,
+      fullPrice: widget.productModel.fullPrice,
+      productImages: widget.productModel.productImages,
+      deliveryTime: widget.productModel.deliveryTime,
+      isSale: widget.productModel.isSale,
+      productDescription: widget.productModel.productDescription,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      productQuantity: 1,
+      productTotalPrice: double.parse(widget.productModel.isSale?widget.productModel.salePrice:widget.productModel.fullPrice),
+      isFavorite: true,
+    );
+    await documentReference.set(cartModel.toMap());
+    Get.snackbar(
+      "Wishlist",
+      "Product add in Wishlist..",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.redAccent,
+      colorText: AppConstant.appTextColor,
+    );
+    Get.to(()=>MainScreens());
+  }
+  //add to cart
   Future<void> checkProductAddToCart({
     required String uId,
     int quantityIncrement=1
-  }) async{
+   }) async{
     final DocumentReference documentReference=FirebaseFirestore.instance
         .collection('cart')
         .doc(uId)
         .collection('cartOrders') //jo bhi apne cart ke ander product store honge usko apni id ke base par insert karenge
-        .doc(widget.productModel.productId.toString() );
+        .doc(widget.productModel.productId.toString());
 
     //jitne bhi doc aapko milenge use hum snapshot me store kr lenge
     DocumentSnapshot snapshot=await documentReference.get();

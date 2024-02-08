@@ -6,6 +6,7 @@ import 'package:foodie/views/user-panel/all-categories-screen.dart';
 import 'package:foodie/views/user-panel/all-flashsale-screen.dart';
 import 'package:foodie/views/user-panel/all-products-screen.dart';
 import 'package:foodie/views/user-panel/cart-screen/cart-screen.dart';
+import 'package:foodie/views/user-panel/favorite-screen/favorite-screen.dart';
 import 'package:foodie/widgets/all-products-widget.dart';
 import 'package:foodie/widgets/banner-widget.dart';
 import 'package:foodie/widgets/custom-drawer-widget.dart';
@@ -42,6 +43,14 @@ class _MainScreensState extends State<MainScreens> {
         backgroundColor: AppConstant.appSecondaryColor,
         title: Text("Dashboard",style: TextStyle(color: AppConstant.appTextColor),),
         actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+                onPressed: () {
+                  //ssg();
+                  Get.to(()=>FavoriteScreen());
+                }, icon: Icon(Icons.favorite_border,color: Colors.white70,)),
+          ),
              Padding(
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
