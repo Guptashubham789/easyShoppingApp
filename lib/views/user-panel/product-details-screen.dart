@@ -242,7 +242,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           'createdAt':DateTime.now()
         }
     );
-    FavoriteModel cartModel=FavoriteModel(
+    FavoriteModel favoriteModel=FavoriteModel(
       productId: widget.productModel.productId,
       categoryId: widget.productModel.categoryId,
       productName: widget.productModel.productName,
@@ -259,7 +259,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       productTotalPrice: double.parse(widget.productModel.isSale?widget.productModel.salePrice:widget.productModel.fullPrice),
       isFavorite: true,
     );
-    await documentReference.set(cartModel.toMap());
+    await documentReference.set(favoriteModel.toMap());
+
     Get.snackbar(
       "Wishlist",
       "Product add in Wishlist..",
@@ -269,6 +270,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
     Get.to(()=>MainScreens());
   }
+
+
+
+
+
+
+
+
   //add to cart
   Future<void> checkProductAddToCart({
     required String uId,
