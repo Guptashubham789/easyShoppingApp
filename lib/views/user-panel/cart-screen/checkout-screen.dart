@@ -193,9 +193,11 @@ class _CheckoutScrenState extends State<CheckoutScren> {
                   child: Container(
                     height: 50.0,
                     child: TextFormField(
+                      controller: nameController,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
+
                         labelText: 'Name',
                         contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                         hintStyle: TextStyle(fontSize: 12,color: Colors.black),
@@ -208,6 +210,7 @@ class _CheckoutScrenState extends State<CheckoutScren> {
                   child: Container(
                     height: 50.0,
                     child: TextFormField(
+                      controller: phoneController,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
@@ -223,6 +226,7 @@ class _CheckoutScrenState extends State<CheckoutScren> {
                   child: Container(
                     height: 50.0,
                     child: TextFormField(
+                      controller: landmarkController,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -238,6 +242,7 @@ class _CheckoutScrenState extends State<CheckoutScren> {
                   child: Container(
                     height: 50.0,
                     child: TextFormField(
+                      controller: addressController,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -254,12 +259,11 @@ class _CheckoutScrenState extends State<CheckoutScren> {
                         padding: EdgeInsets.fromLTRB(10, 10, 10, 10)
                     ),
                     onPressed: () async{
-                      if(nameController!='' && phoneController!='' && landmarkController!='' && addressController!=''){
+                     // if(nameController!='' && phoneController!='' && landmarkController!='' && addressController!='')
                             String name=nameController.text.trim();
                             String phone=phoneController.text.trim();
                             String landmark=landmarkController.text.trim();
                             String address=addressController.text.trim();
-
                             String customerToken=await getCustomerDeviceToken();
                             placeOrder(
                                 context:context,
@@ -269,9 +273,9 @@ class _CheckoutScrenState extends State<CheckoutScren> {
                               customerAddress:address,
                               customerDeviceToken:customerToken,
                             );
-                      }else{
-                        print("Please fill all details..");
-                      }
+                      // }else{
+                      //   print("Please fill all details..");
+                      // }
                     },
                     child: Text('Place Order',style: TextStyle(color: AppConstant.appTextColor),)
                 )
