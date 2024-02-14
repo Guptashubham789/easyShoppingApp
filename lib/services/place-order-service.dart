@@ -89,18 +89,12 @@ void placeOrder({
           
           //delete cart product
           
-          await FirebaseFirestore.instance.collection('cart')
-          .doc(user.uid).collection('cartOrders').doc(cartModel.productId.toString()).delete().then((value)
-          {
-            // Get.snackbar(
-            //   "Delete",
-            //   "Delete cart product ${cartModel.productName.toString()}",
-            //   snackPosition: SnackPosition.TOP,
-            //   backgroundColor: AppConstant.appSecondaryColor,
-            //   colorText: AppConstant.appTextColor,
-            // );
-          });
-          
+          await FirebaseFirestore.instance
+              .collection('cart')
+              .doc(user.uid)
+              .collection('cartOrders')
+              .doc(cartModel.productId.toString())
+              .delete().then((value) {});
         }
       }
       Get.snackbar(

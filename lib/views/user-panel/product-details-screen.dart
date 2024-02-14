@@ -260,7 +260,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       isFavorite: true,
     );
     await documentReference.set(favoriteModel.toMap());
-
+    //upload order phir se order ke ander collection bnayenge
+    await FirebaseFirestore.instance
+        .collection('favorite')
+        .doc(user!.uid)
+        .collection('favoriteProduct')
+        .doc(favoriteModel.productId)
+        .set(
+        favoriteModel.toMap()
+    );
     Get.snackbar(
       "Wishlist",
       "Product add in Wishlist..",
@@ -288,7 +296,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         .doc(uId)
         .collection('cartOrders') //jo bhi apne cart ke ander product store honge usko apni id ke base par insert karenge
         .doc(widget.productModel.productId.toString());
-
     //jitne bhi doc aapko milenge use hum snapshot me store kr lenge
     DocumentSnapshot snapshot=await documentReference.get();
 

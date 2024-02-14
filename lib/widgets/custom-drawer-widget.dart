@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/utils/app-constant.dart';
+import 'package:foodie/views/user-panel/all-orders-screen.dart';
 import 'package:foodie/views/user-panel/all-products-screen.dart';
 import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:get/get.dart';
@@ -76,6 +77,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ListTile(
+              onTap: (){
+                Get.back();
+                Get.to(()=>AllOrdersScreen());
+              },
               titleAlignment: ListTileTitleAlignment.center,
               title: Text('Orders',style: TextStyle(color: AppConstant.appTextColor),),
               leading: Icon(Icons.shopping_bag,color: AppConstant.appTextColor,),
