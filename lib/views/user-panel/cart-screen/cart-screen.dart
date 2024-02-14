@@ -28,7 +28,7 @@ class _CartScreenState extends State<CartScreen> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppConstant.appTextColor),
         backgroundColor: AppConstant.appSecondaryColor,
-        title: Text('Cart Screen',style: TextStyle(color: AppConstant.appTextColor,fontFamily: 'serif'),),
+        title: Text('Cart',style: TextStyle(color: AppConstant.appTextColor,fontFamily: AppConstant.appFontFamily),),
       ),
       body:StreamBuilder(
           stream :FirebaseFirestore.instance
@@ -55,7 +55,7 @@ class _CartScreenState extends State<CartScreen> {
             // yani ki jo hum document ko fetch karna chah rhe h kya vh empty to nhi hai agr empty hai to yha par hum simple return karvayenge
             if(snapshot.data!.docs.isEmpty){
               return Center(
-                child: Text('No flash-sale product found!!'),
+                child: Text('No cart product found!!',style: TextStyle(fontFamily: AppConstant.appFontFamily),),
               );
             }
             //
@@ -115,10 +115,10 @@ class _CartScreenState extends State<CartScreen> {
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(cartModel.productImages[0]),
                           ),
-                          title: Text(cartModel.productName),
+                          title: Text(cartModel.productName,style: TextStyle(fontFamily: AppConstant.appFontFamily),),
                           subtitle: Row(
                             children: [
-                              Text(cartModel.productTotalPrice.toString()),
+                              Text(cartModel.productTotalPrice.toString(),style: TextStyle(fontFamily: AppConstant.appFontFamily),),
                               SizedBox(width: Get.width/20.0,),
                               GestureDetector(
                                 onTap: () async{
@@ -206,7 +206,7 @@ class _CartScreenState extends State<CartScreen> {
                               Get.to(()=>CheckoutScren());
                             },
                             child: Text('Checkout',
-                            style: TextStyle(color: AppConstant.appTextColor),)
+                            style: TextStyle(color: AppConstant.appTextColor,fontFamily: AppConstant.appFontFamily),)
                         ),
                       ),
                     )

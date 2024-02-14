@@ -14,6 +14,8 @@ import 'package:foodie/views/user-panel/favorite-screen/favorite-screen.dart';
 import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'cart-screen/cart-screen.dart';
 
@@ -163,6 +165,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   child: TextButton(
                                       child: Text('WhatsApp',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
                                       onPressed: () {
+                                        sendMessageOnWhatsapp(productModel:widget.productModel,);
                                         //   Navigator.push(context, MaterialPageRoute(builder: (context)=>
                                         //       SignInScreen()));
                                         // },
@@ -279,13 +282,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     Get.to(()=>MainScreens());
   }
 
-
-
-
-
-
-
-
+  //add to whatsapp
+  static Future<void> sendMessageOnWhatsapp({
+    required ProductModel productModel,
+  }) async{
+    final number ="+917704050632";
+    final mesg="Hello Shubham \n I want to know about product \n ${productModel.productName} \n ${productModel.productId} \n Price : ${productModel.productDescription}";
+    final url='https://wa.me/$number?text=${Uri.encodeComponent(mesg)}';
+    if(await canLaunchUrlString(url)){
+      await launchUrlString(url);
+    }else{
+      throw 'Could not lanch $url';
+    }
+  }
   //add to cart
   Future<void> checkProductAddToCart({
     required String uId,

@@ -23,7 +23,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: AppConstant.appSecondaryColor,
-        title: Text('Welcome To My App',style: TextStyle(color: AppConstant.appTextColor),),
+        title: Text('Welcome To My App',style: TextStyle(color: AppConstant.appTextColor,fontFamily: AppConstant.appFontFamily),),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -55,7 +55,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                   child: TextButton.icon(
                     icon:Image.asset('assets/icons/google.png',height: Get.height/12,width:Get.width/12,),
-                    label: Text('Sign in with google',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
+                    label: Text('Sign in with google',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16,fontFamily: AppConstant.appFontFamily),),
                     onPressed: () {
                       _googleSignInController.signInWithGoogle();
                     },
@@ -76,7 +76,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                     child: TextButton.icon(
                       icon: Icon(Icons.email,color: Colors.white,),
-                      label: Text('Sign in with email',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
+                      label: Text('Sign in with email',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16,fontFamily: AppConstant.appFontFamily),),
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>
                             SignInScreen()));

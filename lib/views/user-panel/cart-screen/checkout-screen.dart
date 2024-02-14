@@ -34,7 +34,7 @@ class _CheckoutScrenState extends State<CheckoutScren> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppConstant.appTextColor),
         backgroundColor: AppConstant.appSecondaryColor,
-        title: Text('Checkout Screen',style: TextStyle(color: AppConstant.appTextColor,fontFamily: 'serif'),),
+        title: Text('CheckOut ',style: TextStyle(color: AppConstant.appTextColor,fontFamily: AppConstant.appFontFamily),),
       ),
       body:StreamBuilder(
           stream :FirebaseFirestore.instance
@@ -61,7 +61,7 @@ class _CheckoutScrenState extends State<CheckoutScren> {
             // yani ki jo hum document ko fetch karna chah rhe h kya vh empty to nhi hai agr empty hai to yha par hum simple return karvayenge
             if(snapshot.data!.docs.isEmpty){
               return Center(
-                child: Text('No flash-sale product found!!'),
+                child: Text('No checkout product found!!'),
               );
             }
             //
@@ -146,7 +146,7 @@ class _CheckoutScrenState extends State<CheckoutScren> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text(' Total : ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,fontFamily: 'serif'),),
+                  Text(' Total : ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,fontFamily: AppConstant.appFontFamily),),
                   SizedBox(width: Get.width/40,),
                   Obx(
                           ()=>Text(priceController.totalPrice.value.toString(),style: TextStyle(color: Colors.red,fontFamily: 'serif',fontWeight: FontWeight.bold,fontSize: 14),)),
@@ -164,7 +164,7 @@ class _CheckoutScrenState extends State<CheckoutScren> {
                             showCustomBottomSheet();
                           },
                           child: Text('Confirm Order',
-                            style: TextStyle(color: AppConstant.appTextColor),)
+                            style: TextStyle(color: AppConstant.appTextColor,fontFamily: AppConstant.appFontFamily),)
                       ),
                     ),
                   )

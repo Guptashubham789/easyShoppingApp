@@ -31,4 +31,12 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+<!--    for Url Luncher-->
+<!--    <queries>-->
+<!--        <intent>-->
+<!--            <action android:name="android.intent.action.VIEW"/>-->
+<!--            <category android:name="android.intent.category.BROWSABLE"/>-->
+<!--            <data android:schema="https"/>-->
+<!--        </intent>-->
+<!--    </queries>-->
 </manifest>

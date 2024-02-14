@@ -25,7 +25,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         centerTitle: true,
         backgroundColor: AppConstant.appSecondaryColor,
         iconTheme: IconThemeData(color: AppConstant.appTextColor),
-        title: Text("Forget Screen",style: TextStyle(color: Colors.white),),
+        title: Text("Forget Screen",style: TextStyle(color: Colors.white,fontFamily: AppConstant.appFontFamily),),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -73,7 +73,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     ),
                     child: TextButton.icon(
                       icon: Icon(Icons.lock_reset_outlined,color: Colors.white,),
-                      label: Text('Forgot Password',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
+                      label: Text('Forgot Password',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16,fontFamily: AppConstant.appFontFamily),),
                       onPressed: () async{
                         String email=userEmail.text.trim();
                         if(email.isEmpty){

@@ -29,8 +29,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: AppConstant.appSecondaryColor,
-
-        title: Text("SignUp Screen",style: TextStyle(color: Colors.white),),
+        iconTheme: IconThemeData(color: AppConstant.appTextColor),
+        title: Text("Create Account",style: TextStyle(color: Colors.white,fontFamily: AppConstant.appFontFamily),),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -167,7 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     child: TextButton.icon(
                       icon: Icon(Icons.app_registration,color: Colors.white,),
-                      label: Text('SignUp',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
+                      label: Text('SignUp',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16,fontFamily: AppConstant.appFontFamily),),
                       onPressed: () async{
                           String name=userName.text.trim();
                           String email=userEmail.text.trim();
@@ -213,11 +213,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Already have an account?",style: TextStyle(color: AppConstant.appSecondaryColor,fontSize: 14)),
+                  Text("Already have an account?",style: TextStyle(color: AppConstant.appSecondaryColor,fontSize: 14,fontFamily: AppConstant.appFontFamily)),
                   GestureDetector(onTap:(){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>
                         SignInScreen()));
-                  },child: Text("Login",style: TextStyle(color: AppConstant.appSecondaryColor,fontSize: 14,fontWeight: FontWeight.bold))),
+                  },child: Text("Login",style: TextStyle(color: AppConstant.appSecondaryColor,fontSize: 14,fontWeight: FontWeight.bold,fontFamily: AppConstant.appFontFamily))),
                 ],
               )
             ],

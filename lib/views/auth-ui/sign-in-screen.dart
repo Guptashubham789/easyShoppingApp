@@ -30,8 +30,8 @@ class _SignInScreenState extends State<SignInScreen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: AppConstant.appSecondaryColor,
-
-        title: Text("Login Screen",style: TextStyle(color: Colors.white),),
+        iconTheme: IconThemeData(color: AppConstant.appTextColor),
+        title: Text("Login Screen",style: TextStyle(color: Colors.white,fontFamily: AppConstant.appFontFamily),),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -55,6 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: "Email",
+
                       prefixIcon: Icon(Icons.email),
                       contentPadding: EdgeInsets.only(top: 2,left: 8),
                       border: OutlineInputBorder(
@@ -101,7 +102,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: Text("Forget Password?",
                   style: TextStyle(
                     color: AppConstant.appSecondaryColor,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
+                    fontFamily: AppConstant.appFontFamily
                   ),),
                 ),
               ),
@@ -119,7 +121,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     child: TextButton.icon(
                       icon: Icon(Icons.login,color: Colors.white,),
-                      label: Text('Login',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
+                      label: Text('Login',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16,fontFamily: AppConstant.appFontFamily),),
                       onPressed: () async{
                         String email=userEmail.text.trim();
                         String password=userPassword.text.trim();
@@ -193,12 +195,12 @@ class _SignInScreenState extends State<SignInScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account?",style: TextStyle(color: AppConstant.appSecondaryColor,fontSize: 14)),
+                  Text("Don't have an account?",style: TextStyle(color: AppConstant.appSecondaryColor,fontSize: 14,fontFamily: AppConstant.appFontFamily)),
                   GestureDetector(onTap: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>
                         SignUpScreen()));
                   },
-                      child: Text("SignUp",style: TextStyle(color: AppConstant.appSecondaryColor,fontSize: 14,fontWeight: FontWeight.bold))),
+                      child: Text("SignUp",style: TextStyle(color: AppConstant.appSecondaryColor,fontSize: 14,fontWeight: FontWeight.bold,fontFamily: AppConstant.appFontFamily))),
                 ],
               )
             ],

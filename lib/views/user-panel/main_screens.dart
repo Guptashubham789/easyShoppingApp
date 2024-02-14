@@ -39,9 +39,9 @@ class _MainScreensState extends State<MainScreens> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppConstant.appTextColor),
-        centerTitle: true,
+
         backgroundColor: AppConstant.appSecondaryColor,
-        title: Text("Dashboard",style: TextStyle(color: AppConstant.appTextColor),),
+        title: Text("Home",style: TextStyle(color: AppConstant.appTextColor,fontFamily: AppConstant.appFontFamily),),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),

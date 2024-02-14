@@ -50,18 +50,18 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             thickness: 1.5,
             color: Colors.white,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: ListTile(
-              onTap: (){
-                Get.to(()=>MainScreens());
-              },
-              titleAlignment: ListTileTitleAlignment.center,
-              title: Text('Home',style: TextStyle(color: AppConstant.appTextColor),),
-              leading: Icon(Icons.home,color: AppConstant.appTextColor,),
-              trailing: Icon(Icons.arrow_forward,color: AppConstant.appTextColor,),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          //   child: ListTile(
+          //     onTap: (){
+          //       Get.to(()=>MainScreens());
+          //     },
+          //     titleAlignment: ListTileTitleAlignment.center,
+          //     title: Text('Home',style: TextStyle(color: AppConstant.appTextColor),),
+          //     leading: Icon(Icons.home,color: AppConstant.appTextColor,),
+          //     trailing: Icon(Icons.arrow_forward,color: AppConstant.appTextColor,),
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ListTile(
@@ -84,6 +84,18 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               titleAlignment: ListTileTitleAlignment.center,
               title: Text('Orders',style: TextStyle(color: AppConstant.appTextColor),),
               leading: Icon(Icons.shopping_bag,color: AppConstant.appTextColor,),
+              trailing: Icon(Icons.arrow_forward,color: AppConstant.appTextColor,),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: ListTile(
+              onTap: (){
+
+              },
+              titleAlignment: ListTileTitleAlignment.center,
+              title: Text('Profile',style: TextStyle(color: AppConstant.appTextColor),),
+              leading: Icon(Icons.person,color: AppConstant.appTextColor,),
               trailing: Icon(Icons.arrow_forward,color: AppConstant.appTextColor,),
             ),
           ),
