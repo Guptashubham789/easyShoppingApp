@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:foodie/views/user-panel/all-orders-screen.dart';
 import 'package:foodie/views/user-panel/all-products-screen.dart';
 import 'package:foodie/views/user-panel/main_screens.dart';
+import 'package:foodie/views/user-panel/profile-screen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -13,11 +15,13 @@ import '../views/auth-ui/welcome-screen.dart';
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
 
+
   @override
   State<DrawerWidget> createState() => _DrawerWidgetState();
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
+  final user=FirebaseAuth.instance.currentUser!.uid;
   @override
   Widget build(BuildContext context) {
     return Padding(padding: EdgeInsets.only(top: Get.height/25),
@@ -91,7 +95,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ListTile(
               onTap: (){
-
+                Get.to(()=>ProfileScreen(user:user));
+                //account();
               },
               titleAlignment: ListTileTitleAlignment.center,
               title: Text('Profile',style: TextStyle(color: AppConstant.appTextColor),),

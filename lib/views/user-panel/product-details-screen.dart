@@ -165,7 +165,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   child: TextButton(
                                       child: Text('WhatsApp',style: TextStyle(color: AppConstant.appTextColor,fontSize: 16),),
                                       onPressed: () {
-                                        sendMessageOnWhatsapp(productModel:widget.productModel,);
+                                        //sendMessageOnWhatsapp(productModel:widget.productModel,);
                                         //   Navigator.push(context, MaterialPageRoute(builder: (context)=>
                                         //       SignInScreen()));
                                         // },
@@ -283,18 +283,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   //add to whatsapp
-  static Future<void> sendMessageOnWhatsapp({
-    required ProductModel productModel,
-  }) async{
-    final number ="+917704050632";
-    final mesg="Hello Shubham \n I want to know about product \n ${productModel.productName} \n ${productModel.productId} \n Price : ${productModel.productDescription}";
-    final url='https://wa.me/$number?text=${Uri.encodeComponent(mesg)}';
-    if(await canLaunchUrlString(url)){
-      await launchUrlString(url);
-    }else{
-      throw 'Could not lanch $url';
-    }
-  }
+  // static Future<void> sendMessageOnWhatsapp({
+  //   required ProductModel productModel,
+  // }) async{
+  //   final number ="+917704050632";
+  //   final mesg="Hello Shubham \n I want to know about product \n ${productModel.productName} \n ${productModel.productId} \n Price : ${productModel.productDescription}";
+  //   final url='https://wa.me/$number?text=${Uri.encodeComponent(mesg)}';
+  //   if(await canLaunchUrlString(url)){
+  //     await launchUrlString(url);
+  //   }else{
+  //     throw 'Could not lanch $url';
+  //   }
+  // }
   //add to cart
   Future<void> checkProductAddToCart({
     required String uId,
