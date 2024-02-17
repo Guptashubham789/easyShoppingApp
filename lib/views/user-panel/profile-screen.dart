@@ -129,13 +129,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   );
                                 }
                             );
-
                           }
-
                           return Container();
                         }
                     ),
-
                   ],
                 ),
               ),

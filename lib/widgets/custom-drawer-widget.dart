@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:foodie/utils/app-constant.dart';
 import 'package:foodie/views/user-panel/all-orders-screen.dart';
 import 'package:foodie/views/user-panel/all-products-screen.dart';
+import 'package:foodie/views/user-panel/contacts.dart';
 import 'package:foodie/views/user-panel/main_screens.dart';
 import 'package:foodie/views/user-panel/profile-screen.dart';
 import 'package:get/get.dart';
@@ -107,6 +108,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ListTile(
+              onTap: (){
+                Get.to(()=>ContactsScreen());
+              },
               titleAlignment: ListTileTitleAlignment.center,
               title: Text('Contact',style: TextStyle(color: AppConstant.appTextColor),),
               leading: Icon(Icons.help,color: AppConstant.appTextColor,),
